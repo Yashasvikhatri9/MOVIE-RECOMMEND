@@ -1,5 +1,6 @@
 pandas
 scikit-learn
-joblib
+pickle
 numpy
 jupyter
+flask
