@@ -4,3 +4,4 @@ scikit-learn: 1.7.2
 Flask: 3.1.1
 Jupyter core: 5.8.1
 gunicorn: 21.2.0
+notebook==7.9.1
