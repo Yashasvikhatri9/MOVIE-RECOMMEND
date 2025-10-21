@@ -3,27 +3,11 @@ import pickle
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify, request
 
-import os
-import sys
-
-try:
-    os.makedirs("logs", exist_ok=True)
-    with open("logs/startup.log", "w") as f:
-        f.write(f"Python version: {sys.version}\n")
-        f.write(f"Current working directory: {os.getcwd()}\n")
-        f.write("Startup reached before loading pickle files.\n")
-except Exception as e:
-    print("Failed to write startup log:", e)
-
-
-
-
-
 app = Flask(__name__)
-vector = pickle.load(open("models/vector.pkl", "rb"))
-svd = pickle.load(open("models/svd_model.pkl", "rb"))
-vector_reduced = pickle.load(open("models/vector_reduced.pkl", "rb"))
-movie = pd.read_csv("data/processed/movies_clean.csv")
+vector = pickle.load(open("../models/vector.pkl", "rb"))
+svd = pickle.load(open("../models/svd_model.pkl", "rb"))
+vector_reduced = pickle.load(open("../models/vector_reduced.pkl", "rb"))
+movie = pd.read_csv("../data/processed/movies_clean.csv")
 
 
 # Build query text for recommendation
@@ -85,5 +69,4 @@ def recommend_movies_api():
     })
 
 if __name__ == "__main__":
-    # Local testing
     app.run(host="0.0.0.0", port=5000, debug=False)
