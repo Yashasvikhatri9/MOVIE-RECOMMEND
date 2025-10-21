@@ -9,9 +9,11 @@ movie-recommender-ml/
 │   ├── raw/                     # Original movie dataset
 │   └── processed/               # Cleaned dataset for training
 │       └── movies_clean.csv
+│       └── movies_with_trailers_safe.csv
 ├── models/
-│   ├── tfidf.pkl                # Trained TF-IDF vectorizer
-│   └── tfidf_matrix.pkl         # Precomputed embeddings
+│   ├── vector.pkl                # Trained TF-IDF vectorizer
+│   └── vector_reduced.pkl         # Precomputed embeddings
+│   └── svd_model.pkl
 ├── notebooks/
 │   ├── 1_data_cleaning.ipynb    # cleaning, preprocessing
 │   └── 2_model_training.ipynb   # model training & saving
@@ -23,4 +25,4 @@ movie-recommender-ml/
 
 ## Usage
 - Import `recommend_movies` in Python projects.
-- Ensure `tfidf.pkl`, `tfidf_matrix.pkl`, and `movies_clean.csv` exist in the paths above.
+- Ensure `vector.pkl`, `vector_reduced.pkl`, `svd_model.pkl`, `movies_with_trailers_safe.csv` and `movies_clean.csv` exist in the paths above.
