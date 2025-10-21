@@ -4,10 +4,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-vector = pickle.load(open("/models/vector.pkl", "rb"))
-svd = pickle.load(open("/models/svd_model.pkl", "rb"))
-vector_reduced = pickle.load(open("/models/vector_reduced.pkl", "rb"))
-movie = pd.read_csv("/data/processed/movies_clean.csv")
+vector = pickle.load(open("models/vector.pkl", "rb"))
+svd = pickle.load(open("models/svd_model.pkl", "rb"))
+vector_reduced = pickle.load(open("models/vector_reduced.pkl", "rb"))
+movie = pd.read_csv("data/processed/movies_clean.csv")
+
 
 # Build query text for recommendation
 def build_query(user_info: dict):
@@ -66,3 +67,7 @@ def recommend_movies_api():
         "recommendations": recommendations,
         "bookmarked_movies": bookmarked
     })
+
+if __name__ == "__main__":
+    # Local testing
+    app.run(host="0.0.0.0", port=5000, debug=False)
