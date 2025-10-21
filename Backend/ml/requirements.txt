@@ -1,6 +1,6 @@
-numpy==1.27.0
-jupyter==1.0.0
-Flask==2.3.3
-pandas==2.1.1
-scikit-learn==1.3.2
-gunicorn==21.2.0
+numpy: 2.2.6
+pandas: 2.2.3
+scikit-learn: 1.7.2
+Flask: 3.1.1
+Jupyter core: 5.8.1
+gunicorn: 21.2.0
