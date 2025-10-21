@@ -1,6 +1,6 @@
 pandas
 scikit-learn
-pickle
 numpy
 jupyter
 flask
+gunicorn

@@ -20,7 +20,7 @@ def build_query(user_info: dict):
 
     if all_movies:
         # If there are any movies from the user, combine their text
-        selected = movie[movie["imdb_id"].isin(all_movies)]
+        selected = movie[movie["id"].isin(all_movies)]
         combined_text = " ".join(selected["combined_text"].dropna().tolist())
         if combined_text.strip():
             return combined_text
