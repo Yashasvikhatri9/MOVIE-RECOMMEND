@@ -8,3 +8,5 @@ __pycache__/
 .venv/
 __pycache__/
 *.pyc
+!Backend/ml/models/*.pkl
+!Backend/ml/data/processed/*.csv
