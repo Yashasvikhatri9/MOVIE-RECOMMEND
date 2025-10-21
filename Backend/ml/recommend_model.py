@@ -66,7 +66,3 @@ def recommend_movies_api():
         "recommendations": recommendations,
         "bookmarked_movies": bookmarked
     })
-
-
-if __name__ == "__main__":
-    app.run()
