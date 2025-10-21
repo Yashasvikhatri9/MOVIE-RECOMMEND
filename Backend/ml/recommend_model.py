@@ -1,14 +1,16 @@
+import os
 import pandas as pd
 import pickle
-from sklearn.metrics.pairwise import cosine_similarity
-from flask import Flask, jsonify, request
+from flask import Flask
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+vector = pickle.load(open(os.path.join(BASE_DIR, "models/vector.pkl"), "rb"))
+svd = pickle.load(open(os.path.join(BASE_DIR, "models/svd_model.pkl"), "rb"))
+vector_reduced = pickle.load(open(os.path.join(BASE_DIR, "models/vector_reduced.pkl"), "rb"))
+movie = pd.read_csv(os.path.join(BASE_DIR, "data/processed/movies_clean.csv"))
 
 app = Flask(__name__)
-vector = pickle.load(open("models/vector.pkl", "rb"))
-svd = pickle.load(open("models/svd_model.pkl", "rb"))
-vector_reduced = pickle.load(open("models/vector_reduced.pkl", "rb"))
-movie = pd.read_csv("data/processed/movies_clean.csv")
-
 
 # Build query text for recommendation
 def build_query(user_info: dict):
