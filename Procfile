@@ -1,0 +1,1 @@
+web: gunicorn recommend_model:app
