@@ -34,8 +34,7 @@ def build_query(user_info: dict):
     if fallback_query:
         return fallback_query
 
-    # If everything is missing, return a generic empty string (or a default genre query)
-    return "comedy action"  # optional default query
+    return "comedy action" 
 
 
 # Recommendation function
@@ -46,7 +45,7 @@ def recommend_movies(query: str, top_n: int = 10):
     query_vec = vector.transform([query.lower()])
     query_vec_reduced = svd.transform(query_vec)
     similarity = cosine_similarity(query_vec_reduced, vector_reduced[movies_filtered.index.to_numpy()]).flatten()
-    top_indices = similarity.argsort()[::-1][:top_n]
+    top_indices = similarity.argsort()[::-1][2:top_n+1]
     recommended = movies_filtered.iloc[top_indices][['id','imdb_id','title','vote_average','vote_count','genres','backdrop_path','poster_path','trailer_link']].copy()
     recommended['similarity'] = similarity[top_indices]
     return recommended.to_dict(orient="records")
