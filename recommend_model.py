@@ -2,19 +2,14 @@ import pandas as pd
 import joblib
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify, request
+from huggingface_hub import hf_hub_download
+
 
 app = Flask(__name__)
-try:
-    with open("models/vector.joblib", "rb") as f:
-        vector = joblib.load(f)
-    with open("models/vector_reduced.joblib", "rb") as f:
-        vector_reduced = joblib.load(f)
-    with open("models/svd_model.joblib", "rb") as f:
-        svd = joblib.load(f)
-except Exception as e:
-    raise e
-movie = pd.read_csv("data/processed/movies_clean.csv")
-
+vector = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "models/vector.joblib"))
+vector_reduced = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "models/vector_reduced.joblib"))
+svd = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "models/svd_model.joblib"))
+movie = pd.read_csv(hf_hub_download("yashasvi-01-02/movie-recommendation", "data/processed/movies_clean.csv"))
 
 
 def build_query(user_info: dict):
