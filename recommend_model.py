@@ -5,11 +5,11 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 try:
-    with open("/app/models/vector.joblib", "rb") as f:
+    with open("models/vector.joblib", "rb") as f:
         vector = joblib.load(f)
-    with open("/app/models/vector_reduced.joblib", "rb") as f:
+    with open("models/vector_reduced.joblib", "rb") as f:
         vector_reduced = joblib.load(f)
-    with open("/app/models/svd_model.joblib", "rb") as f:
+    with open("models/svd_model.joblib", "rb") as f:
         svd = joblib.load(f)
 except Exception as e:
     raise e
