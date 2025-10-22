@@ -1,12 +1,12 @@
 import pandas as pd
-import pickle
+import joblib
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-vector = pickle.load(open("models/vector.pkl", "rb"))
-svd = pickle.load(open("models/svd_model.pkl", "rb"))
-vector_reduced = pickle.load(open("models/vector_reduced.pkl", "rb"))
+vector = joblib.load(open("models/vector.pkl", "rb"))
+svd = joblib.load(open("models/svd_model.pkl", "rb"))
+vector_reduced = joblib.load(open("models/vector_reduced.pkl", "rb"))
 movie = pd.read_csv("data/processed/movies_clean.csv")
 
 
