@@ -1,20 +1,22 @@
-# Use an official Python runtime as a parent image
+# Use official slim Python 3.11 image
 FROM python:3.11-slim
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
-
 # Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
+# Copy application code and models
 COPY . .
+
+# Ensure models are in /app/models
+# Example: vector.joblib, svd_model.joblib inside /app/models
 
 # Expose the port your app runs on
 EXPOSE 8080
 
 # Command to run the app using gunicorn
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8080", "recommend_model:app"]
+# -w 2 uses 2 workers, adjust for your app load
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:8080", "recommend_model:app"]
