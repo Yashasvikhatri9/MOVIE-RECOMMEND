@@ -4,16 +4,20 @@ from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-vector = joblib.load(open("models/vector.joblib", "rb"))
-svd = joblib.load(open("models/svd_model.joblib", "rb"))
-vector_reduced = joblib.load(open("models/vector_reduced.joblib", "rb"))
+try:
+    with open("models/vector.joblib", "rb") as f:
+        vector = joblib.load(f)
+    with open("models/vector_reduced.joblib", "rb") as f:
+        vector_reduced = joblib.load(f)
+    with open("models/svd_model.joblib", "rb") as f:
+        svd = joblib.load(f)
+except Exception as e:
+    raise e
 movie = pd.read_csv("data/processed/movies_clean.csv")
 
 
 
-# Build query text for recommendation
 def build_query(user_info: dict):
-    # Get user movie IDs, default to empty lists
     watched = user_info.get("watched_ids", [])
     searched = user_info.get("searched_ids", [])
     bookmarked = user_info.get("bookmarked_movies", [])
@@ -26,8 +30,6 @@ def build_query(user_info: dict):
         combined_text = " ".join(selected["combined_text"].dropna().tolist())
         if combined_text.strip():
             return combined_text
-
-    # If no movies provided or combined_text is empty, fallback to genres/language
     genres = user_info.get("genres", "")
     language = user_info.get("language", "")
     fallback_query = (genres + " " + language).strip()
@@ -36,8 +38,6 @@ def build_query(user_info: dict):
 
     return "comedy action" 
 
-
-# Recommendation function
 def recommend_movies(query: str, top_n: int = 10):
     if not query or not query.strip():
         return []
