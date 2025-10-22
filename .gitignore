@@ -9,3 +9,4 @@ __pycache__/
 *.pyc
 !Backend/ml/models/*.pkl
 !Backend/ml/data/processed/*.csv
+!Backend/ml/models/*.joblib
