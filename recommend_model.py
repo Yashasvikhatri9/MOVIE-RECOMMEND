@@ -4,10 +4,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, jsonify, request
 from huggingface_hub import hf_hub_download
 app = Flask(__name__)
-vector = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "vector.joblib"))
-vector_reduced = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "vector_reduced.joblib"))
-svd = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "svd_model.joblib"))
-movie = pd.read_csv(hf_hub_download("yashasvi-01-02/movie-recommendation", "movies_clean.csv"))
+vector = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "models/vector.joblib"))
+vector_reduced = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "models/vector_reduced.joblib"))
+svd = joblib.load(hf_hub_download("yashasvi-01-02/movie-recommendation", "models/svd_model.joblib"))
+movie = pd.read_csv(hf_hub_download("yashasvi-01-02/movie-recommendation", "data/processed/movies_clean.csv"))
 
 def build_query(user_info: dict):
     watched = user_info.get("watched_ids", [])
