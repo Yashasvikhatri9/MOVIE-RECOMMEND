@@ -27,7 +27,7 @@ def build_query(user_info: dict):
 def recommend_movies(query: str, top_n: int = 10):
     if not query or not query.strip():
         return []
-    movies_filtered = movie[(movie["vote_average"] > 2) & (movie["vote_count"] > 40)].reset_index(drop=True)
+    movies_filtered = movie[(movie["vote_average"] > 2) & (movie["vote_count"] > 40)]
     query_vec = vector.transform([query.lower()])
     query_vec_reduced = svd.transform(query_vec)
     similarity = cosine_similarity(query_vec_reduced, vector_reduced[movies_filtered.index.to_numpy()]).flatten()
