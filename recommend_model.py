@@ -14,13 +14,13 @@ def build_query(user_info: dict):
     searched = user_info.get("searched_ids", [])
     bookmarked = user_info.get("bookmarked_movies", [])
     all_movies = list(set(watched + searched + bookmarked))
+    genres = user_info.get("genres", "")
+    language = user_info.get("language", "")
     if all_movies:
         selected = movie[movie["id"].isin(all_movies)]
         combined_text = " ".join(selected["combined_text"].dropna().tolist())
         if combined_text.strip():
-            return combined_text
-    genres = user_info.get("genres", "")
-    language = user_info.get("language", "")
+            return (combined_text + " " + genres + " " + language).strip()
     first_query = (genres + " " + language).strip()
     return first_query
 
@@ -40,10 +40,12 @@ def recommend_movies(query: str, top_n: int = 10):
 @app.route("/recommend_movies", methods=["POST"])
 def recommend_movies_api():
     user_info = request.json or {}
+    user_id = user_info.get("user")
     query_text = build_query(user_info)
     recommendations = recommend_movies(query_text)
     bookmarked = user_info.get("bookmarked_movies", [])
     return jsonify({
+        "user":user_id,
         "recommendations": recommendations,
         "bookmarked_movies": bookmarked
     })
